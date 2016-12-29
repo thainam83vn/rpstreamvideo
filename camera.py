@@ -28,7 +28,7 @@ class VideoCamera(object):
             image = frame.array
             self.image = image
             self.rawCapture.truncate(0)
-            print("update image")
+            #print("update image")
 
     def __del__(self):
         #self.video.release()
