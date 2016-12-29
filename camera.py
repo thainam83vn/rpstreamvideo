@@ -27,7 +27,7 @@ class VideoCamera(object):
         for frame in self.video.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
             image = frame.array
             self.image = image
-            rawCapture.truncate(0)
+            self.rawCapture.truncate(0)
             print("update image")
 
     def __del__(self):
