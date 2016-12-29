@@ -1,7 +1,7 @@
 import cv2
 from  picamera.array import PiRGBArray
-from picamera import PiCamera
 import time
+import threading
 
 
 class VideoCamera(object):
@@ -13,11 +13,21 @@ class VideoCamera(object):
         self.video.resolution = (640, 480)
         self.video.framerate = 32
         self.rawCapture = PiRGBArray(camera, size=(640,480))
+        self.threads = []
         time.sleep(0.1)
+        t = threading.Thread(target=doCamera)
+        self.threads.append(t)
+        t.start()
         # If you decide to use video.mp4, you must have this file in the folder
         # as the main.py.
         # self.video = cv2.VideoCapture('video.mp4')
-    
+
+    def doCamera(self):
+        for frame in self.video.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
+            image = frame.array
+            self.image = image
+            print("update image")
+
     def __del__(self):
         #self.video.release()
         self.video = None
@@ -27,9 +37,8 @@ class VideoCamera(object):
         # We are using Motion JPEG, but OpenCV defaults to capture raw images,
         # so we must encode it into JPEG in order to correctly display the
         # video stream.
-        for frame in self.video.capture_continuous(self.rawCapture, format="jpeg", use_video_port=True):
+        for frame in self.video.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
             image = frame.array
-            #ret, jpeg = cv2.imencode('.jpg', image)
-            jpeg = image
+            ret, jpeg = cv2.imencode('.jpg', image)
             return jpeg.tobytes()
         return None
