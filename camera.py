@@ -13,7 +13,7 @@ class VideoCamera(object):
         self.video = PiCamera()
         self.video.resolution = (640, 480)
         self.video.framerate = 32
-        self.rawCapture = PiRGBArray(self.camera, size=(640,480))
+        self.rawCapture = PiRGBArray(self.video, size=(640,480))
         self.threads = []
         time.sleep(0.1)
         t = threading.Thread(target=self.doCamera)
