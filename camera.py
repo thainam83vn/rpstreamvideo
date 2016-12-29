@@ -13,10 +13,10 @@ class VideoCamera(object):
         self.video = PiCamera()
         self.video.resolution = (640, 480)
         self.video.framerate = 32
-        self.rawCapture = PiRGBArray(camera, size=(640,480))
+        self.rawCapture = PiRGBArray(self.camera, size=(640,480))
         self.threads = []
         time.sleep(0.1)
-        t = threading.Thread(target=doCamera)
+        t = threading.Thread(target=self.doCamera)
         self.threads.append(t)
         t.start()
         # If you decide to use video.mp4, you must have this file in the folder
