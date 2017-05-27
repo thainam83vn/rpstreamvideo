@@ -1,10 +1,11 @@
+import cv2
 from  picamera.array import PiRGBArray
 from picamera import PiCamera
 import time
 import threading
 
 
-class VideoCamera(object):
+class VideoPiCamera(object):
     def __init__(self):
         # Using OpenCV to capture from device 0. If you have trouble capturing
         # from a webcam, comment the line below out and use a video file
@@ -12,7 +13,7 @@ class VideoCamera(object):
         self.video = PiCamera()
         self.video.resolution = (640, 480)
         self.video.framerate = 32
-        self.rawCapture = PiRGBArray(self.video, size=(640,480))
+        self.rawCapture = PiRGBArray(self.video, size=(640, 480))
         self.threads = []
         time.sleep(0.1)
         t = threading.Thread(target=self.doCamera)
@@ -27,22 +28,21 @@ class VideoCamera(object):
             image = frame.array
             self.image = image
             self.rawCapture.truncate(0)
-            #print("update image")
+            # print("update image")
 
     def __del__(self):
-        #self.video.release()
+        # self.video.release()
         self.video.close()
-    
+
     def get_frame(self):
-        #success, image = self.video.read()
+        # success, image = self.video.read()
         # We are using Motion JPEG, but OpenCV defaults to capture raw images,
         # so we must encode it into JPEG in order to correctly display the
         # video stream.
-        #return cv2.imencode('.jpg', self.image)
-        return self.image
+        return cv2.imencode('.jpg', self.image)
 
-        #for frame in self.video.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
+        # for frame in self.video.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
         #    image = frame.array
         #    ret, jpeg = cv2.imencode('.jpg', image)
         #    return jpeg.tobytes()
-        #return None
+        # return None
