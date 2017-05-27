@@ -9,7 +9,7 @@ with picamera.PiCamera() as camera:
     camera.start_preview()
     while True:
         time.sleep(0.1)
-        file_name = "" + i + ".jpg"
+        file_name = str(i) + ".jpg"
         my_file = open("images/" + file_name, 'wb')
         camera.capture(my_file)
         my_file.close()
