@@ -13,6 +13,7 @@ with picamera.PiCamera() as camera:
         my_file = open("images/" + file_name, 'wb')
         camera.capture(my_file)
         my_file.close()
+        i = i + 1
 # At this point my_file.flush() has been called, but the file has
 # not yet been closed
 
