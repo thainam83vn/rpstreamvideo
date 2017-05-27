@@ -23,7 +23,7 @@ class VideoCamera(object):
         # self.video = cv2.VideoCapture('video.mp4')
 
     def doCamera(self):
-        for frame in self.video.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
+        for frame in self.video.capture_continuous(self.rawCapture, format='jpeg', use_video_port=True):
             image = frame.array
             self.image = image
             self.rawCapture.truncate(0)
