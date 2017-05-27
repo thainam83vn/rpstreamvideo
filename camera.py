@@ -1,5 +1,6 @@
 from  picamera.array import PiRGBArray
 from picamera import PiCamera
+#import cv2
 import time
 import threading
 
@@ -23,7 +24,7 @@ class VideoCamera(object):
         # self.video = cv2.VideoCapture('video.mp4')
 
     def doCamera(self):
-        for frame in self.video.capture_continuous(self.rawCapture, format='jpeg', use_video_port=True):
+        for frame in self.video.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
             image = frame.array
             self.image = image
             self.rawCapture.truncate(0)
@@ -39,7 +40,8 @@ class VideoCamera(object):
         # so we must encode it into JPEG in order to correctly display the
         # video stream.
         #return cv2.imencode('.jpg', self.image)
-        return self.image
+        return self.image.convert('jpg')
+
 
         #for frame in self.video.capture_continuous(self.rawCapture, format="bgr", use_video_port=True):
         #    image = frame.array
